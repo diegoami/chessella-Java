@@ -1,0 +1,10 @@
+
+
+#foreach( $row in $board.rows )
+    
+#foreach( $char in $row.chars )
+    $char
+    
+#end
+#end
+

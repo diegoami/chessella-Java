@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-2.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="com.amicabile.openingtrainer.model.dataobj.GameDataObj" table="GAME_DATA_OBJ">
+
+    <id name="id" type="long" column="GAME_ID">
+      <meta attribute="scope-set">protected</meta>
+      <generator class="native"/>
+    </id>
+
+    <property name="boardnumber" type="int" not-null="false"/>
+
+	      <property name="white" type="string" not-null="false"/>
+    <property name="black" type="string" not-null="false"/>
+    <property name="result" type="string" not-null="false"/>
+    <property name="date" type="date" not-null="false"/>
+    <property name="event" type="string" not-null="false"/>
+    <property name="site" type="string" not-null="false"/>
+    <property name="round" type="string" not-null="false"/>
+
+	      <property name="eco" type="string" not-null="false"/>
+    <property name="tags" type="string" not-null="false"/>
+    <property name="annotator" type="string" not-null="false"/>
+	<property name="pgnstring" type="text" not-null="true"/>
+    <property name="publicgame" type="boolean" not-null="true" column="publicgame"/>
+    <property name="deleted" type="boolean" not-null="true" column="deleted"/>
+
+	  <many-to-one
+		name="user"
+		column="USER_ID"
+		class="com.amicabile.openingtrainer.model.dataobj.User"
+	/>
+  </class>
+
+  
+	 <query name="com.amicabile.openingtrainer.model.dataobj.GameByUserName">
+    <![CDATA[
+        from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj
+		where gameDataObj.user.username = :username order by GAME_ID desc
+
+      ]]>
+
+		 
+		   </query>
+	
+	
+	<query name="com.amicabile.openingtrainer.model.dataobj.GameByUserNameDeleted">
+    <![CDATA[
+        from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj
+		where gameDataObj.user.username = :username and gameDataObj.deleted = 1
+
+      ]]>
+
+		 
+		   </query>
+	<!--
+ <query name="com.amicabile.openingtrainer.model.dataobj.GameByUserNameValueList">
+    <![CDATA[
+        select gameDataObj.GAME_ID, gameDataObj.white, gameDataObj.black, gameDataObj.result, gameDataObj.date, gameDataObj.event, gameDataObj.site, gameDataObj.round, user.username from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj
+		where gameDataObj.user.username = :username and order by GAME_ID 
+
+      ]]>
+
+		 
+		   </query>
+-->
+	 <query name="com.amicabile.openingtrainer.model.dataobj.CountGames">
+    <![CDATA[
+        select count(*) from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj 
+		where gameDataObj.publicgame = 1 and gameDataObj.deleted = 0
+      ]]>
+	</query>
+	
+
+		 <query name="com.amicabile.openingtrainer.model.dataobj.AllGames">
+    <![CDATA[
+        from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj 
+		where gameDataObj.publicgame = 1 and gameDataObj.deleted = 0
+		order by GAME_ID 
+      ]]>
+	</query>
+	
+	<query name="com.amicabile.openingtrainer.model.dataobj.LastGames">
+    <![CDATA[
+        from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj 
+				where gameDataObj.publicgame = 1 and gameDataObj.deleted = 0
+
+		order by GAME_ID desc 
+      ]]>
+	</query>
+
+<!--	<query name="com.amicabile.openingtrainer.model.dataobj.AllGamesValueList">
+	<![CDATA[
+        select gameDataObj.GAME_ID, gameDataObj.white, gameDataObj.black, gameDataObj.result, gameDataObj.date, gameDataObj.event, gameDataObj.site, gameDataObj.round, user.username from com.amicabile.openingtrainer.model.dataobj.GameDataObj gameDataObj
+		 order by GAME_ID desc
+
+      ]]>
+	</query>
+	-->
+	
+</hibernate-mapping>

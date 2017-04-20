@@ -1,0 +1,33 @@
+<!--
+Add the following DOCTYPE declaration as first line of your XXX-validation.xml file:
+<!DOCTYPE validators PUBLIC "-//OpenSymphony Group//XWork Validator 1.0.2//EN"
+"http://www.opensymphony.com/xwork/xwork-validator-1.0.2.dtd">
+-->
+<validators>
+	<field name="username">
+		<field-validator type="requiredstring">
+			<message>You must enter a user name</message>
+		</field-validator>
+	</field>
+	<field name="password">
+		<field-validator type="requiredstring">
+			<message>You must enter a password</message>
+		</field-validator>
+	</field>
+	<field name="password2">
+		<field-validator type="requiredstring">
+			<message>You must enter a password</message>
+		</field-validator>
+	</field>
+	<field name="email">
+		<field-validator type="requiredstring">
+			<message>You must enter an email</message>
+		</field-validator>
+	</field>
+	<field name="email2">
+		<field-validator type="requiredstring">
+			<message>You must enter an email</message>
+		</field-validator>
+	</field>
+
+</validators>

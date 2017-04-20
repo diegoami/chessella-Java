@@ -1,0 +1,3 @@
+<#compress>
+<table border='0' cellspacing='0' cellpadding='0' width='${internalSize}' height='${internalSize}'><#list board.rows as row ><TR><#list row.piecesAndColors as pieceAndColor ><TD border=0 padding=0 WIDTH=${squareSize} HEIGHT=${squareSize} ><#assign pieceChar = pieceAndColor.piece.charRepr /><#assign colorChar = pieceAndColor.color.charRepr /><IMG BORDER=0 SRC="${base}/chessworld/${squareSize}${pieceChar}.gif"></TD></#list></TR></#list></TABLE>
+</#compress>
