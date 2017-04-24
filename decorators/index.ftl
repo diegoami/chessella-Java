@@ -46,20 +46,6 @@ callOnLoad(init);
 		<div class="left">
 			 <h2>Share and learn from chess games</h2>
 		</div>
-	    <div class="center">
-<#assign horbanner = ((gameList?exists  && gameList.size() != 0) || (pgnString?exists)) />		
-		<#if (horbanner  ) >
-			<#include "adsensehor.ftl" />
-		<#else>
-	  <center><a href="http://www.chessworld.net/chessclubs/asplogin.asp?from=235515"><img border=0 src="http://www.chessworld.net/gif/logos/chessworld_banner.gif" alt="Online chess"></a>
-  
-  <br>Play <a href="http://www.chessworld.net/chessclubs/asplogin.asp?from=235515">online chess</a> at chessworld.net</span></FONT></B></h1>
-  </center>
-		</#if>
-		</div>
-
-		  		 
-
 	  </div>
       <div class="subHeader">
         <span class="doNotDisplay">Navigation:</span>
@@ -148,9 +134,6 @@ callOnLoad(init);
  
     </div>
 
-<#if (!horbanner ) >
-	  	<#include "adsense.ftl" />
-</#if>
     <div id="main-copy"> 
       ${body}
     </div> 
