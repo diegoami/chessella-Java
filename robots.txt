@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /chessella/games/lastgames.action
+Disallow: /chessella/games/showgame.action
+Disallow: /chessella/games/showpgn.action
