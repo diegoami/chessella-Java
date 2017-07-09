@@ -1,0 +1,175 @@
+
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.1.1//EN"
+	"http://www.opensymphony.com/xwork/xwork-1.1.1.dtd">
+<xwork>
+	<include file="webwork-default.xml"/>
+	
+	
+	<package name="default" extends="webwork-default">
+
+			<default-interceptor-ref name="completeStack"/>
+		<default-action-ref name="main"/>
+
+		<action name="main" class="com.opensymphony.xwork.ActionSupport">
+			
+			<result name="success" type="freemarker">main.ftl</result>
+	</action>
+		<action name="links" class="com.opensymphony.xwork.ActionSupport">
+			<result name="success" type="freemarker">links.ftl</result>
+		</action>
+			
+	</package>	
+	<package name="user" extends="default">
+	
+			<!-- Include webwork defaults (from WebWork JAR). -->
+	
+		
+<!--		<action name="ShowPgnActionForm" class="com.amicabile.openingtrainer.servlet.webwork.ShowPgnActionForm">
+			<result name="success" type="freemarker" >templates/gamelisttemplate.ftl</result>
+			<result name="error" type="dispatcher">pgnform.html</result>
+		</action>-->
+		
+		<action name="register" class="com.amicabile.openingtrainer.servlet.webwork.user.RegisterAction">
+			<result name="input" type="freemarker">register.ftl</result>
+			<result name="success" type="redirect">/games/mygames.action</result>
+			<result name="error" type="freemarker">register.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		
+		<action name="login" class="com.amicabile.openingtrainer.servlet.webwork.user.LoginAction">
+			<result name="input" type="freemarker">login.ftl</result>
+			<result name="success" type="redirect" >/games/mygames.action</result>
+			<result name="error" type="freemarker">login.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="loginform" class="com.opensymphony.xwork.ActionSupport">
+			<result name="success" type="freemarker">login.ftl</result>
+		</action>
+		<action name="registerform" class="com.opensymphony.xwork.ActionSupport">
+			<result name="success" type="freemarker">register.ftl</result>
+		</action>
+
+		
+				<action name="logout" class="com.amicabile.openingtrainer.servlet.webwork.user.LogoutAction">
+			<result name="success" type="redirect">/main.action</result>
+		</action>
+
+		<action name="settings" class="com.amicabile.openingtrainer.servlet.webwork.user.SettingsAction">
+			<result name="input" type="freemarker">settings.ftl</result>
+			<result name="success" type="freemarker" >settings.ftl</result>
+			<result name="error" type="freemarker">settings.ftl</result>
+			<result name="login" type="freemarker">login.ftl</result>
+	
+		</action>
+		
+	</package>
+	<package name="games" extends="default">
+		<action name="uploadpgnform" class="com.opensymphony.xwork.ActionSupport">
+			<result name="success" type="freemarker">fileuploadtemplate.ftl</result>
+		</action>
+
+		<action name="savepgn" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="saveGameFromPgn" >
+			<result name="input" type="freemarker">pgnwork.ftl</result>
+			<result name="success" type="redirect">mygames.action</result>
+			<result name="error" type="freemarker">pgnwork.ftl</result>
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="uploadpgn" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="uploadPgn" >
+			<result name="input" type="freemarker">browsegamestemplate.ftl</result>
+			<result name="success" type="freemarker" >fileuploadtemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="fileUpload"/>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+
+		<action name="savelink" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="saveGameFromLink" >
+			<result name="input" type="freemarker">savelink.ftl</result>
+			<result name="success" type="redirect">mygames.action</result>
+			<result name="error" type="freemarker">savelink.ftl</result>
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="listgames" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="listAll" >
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<result name="success" type="freemarker" >browsegamestemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="deletegames" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="deletedGames" >
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<result name="success" type="redirect" >mygames.action</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="mygames" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="listForUsername" >
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<result name="success" type="freemarker" >browsegamestemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="lastgames" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="listLastGames" >
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<result name="success" type="freemarker" >browsegamestemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="sessiongames" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="listSessionGames" >
+			<result name="login" type="redirect">/user/loginform.action</result>
+			<result name="success" type="freemarker" >browsegamestemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+	    <action name="export" class="com.opensymphony.xwork.ActionSupport">
+			<result name="success" type="freemarker">exportpgn.ftl</result>
+		</action>
+
+		<action name="showgame" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="showGameById" >
+			<result name="input" type="freemarker">browsegamestemplate.ftl</result>
+			<result name="success" type="freemarker" >gamelisttemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="showpgn" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="showPgnStringById" >
+			<result name="input" type="freemarker">browsegamestemplate.ftl</result>
+			<result name="success" type="freemarker" >pgntemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		
+		<action name="deletegame" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="deleteGameById">
+			<result name="input" type="freemarker">browsegamestemplate.ftl</result>
+			<result name="success" type="redirect">sessiongames.action</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+		<action name="switchpublicgame" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="switchGameStateById">
+			<result name="input" type="freemarker">browsegamestemplate.ftl</result>
+			<result name="success" type="redirect">sessiongames.action</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+
+				<action name="modifyPgnStringById" class="com.amicabile.openingtrainer.servlet.webwork.games.GameAction" method="modifyPgnStringById">
+			<result name="input" type="freemarker">pgntemplate.ftl</result>
+			<result name="success" type="freemarker">gamelisttemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+
+		<action name="searchgamesform" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="initSearch" >
+			<result name="success" type="freemarker">searchgamestemplate.ftl</result>
+		</action>
+
+		<action name="searchgames" class="com.amicabile.openingtrainer.servlet.webwork.games.ListGamesAction" method="searchByCriteria" >
+			<result name="login" type="redirect">/user/login.action</result>
+			<result name="input" type="freemarker">searchgamestemplate.ftl</result>
+			<result name="success" type="freemarker" >browsegamestemplate.ftl</result>
+			<result name="error" type="freemarker">gameerror.ftl</result>
+			<interceptor-ref name="defaultComponentStack"/>
+		</action>
+
+	</package>
+		
+
+</xwork>
