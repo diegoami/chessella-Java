@@ -1,5 +1,5 @@
 <@ww.actionerror />
-
+<#if (!user?exists) >
 <H3>Search in ${gamesCount} ( mostly annotated ) chess games!  </H3>
 	<#assign resultTypes = ["1-0", "0-1", "1/2-1/2", "*"]/>
 
@@ -24,6 +24,7 @@
 		<@ww.submit/>
 	</@ww.form>
 		
-<#if (!user?exists) >
 <I>Register to upload your chess games ! </I>
+<#else>
+<B>Please log out to execute a search - sorry for the incovenience. </B>
 </#if>
